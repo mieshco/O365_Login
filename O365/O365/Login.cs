@@ -27,10 +27,10 @@ namespace O365
         }
         
         [Test, TestCaseSource(nameof(LoginCombinations))]
-        public void GetLoginCookie(string target, string username, string password, string filePath)
+        public void GetLoginCookie(string target, string user, string pwd, string outputPath)
         {
-            var gate1 = new O365Login(_driver,username);
-            var gate2 = new LiveLogin(_driver, password);
+            var gate1 = new O365Login(_driver, user);
+            var gate2 = new LiveLogin(_driver, pwd);
 
             _driver.Navigate().GoToUrl(target);
             gate1.Login();
@@ -42,15 +42,17 @@ namespace O365
 
             var cookie1 = Browser.ReadCookie(_driver,"FedAuth");
             var cookie2 = Browser.ReadCookie(_driver, "rtFa");
-            System.IO.File.WriteAllText(filePath, $"{cookie1};{cookie2}");
+            System.IO.File.WriteAllText(outputPath, $"{cookie1};{cookie2}");
         }
 
         private static readonly object[] LoginCombinations =
         {
-            new object[] {"https://x.sharepoint.com/AllItems.aspx",
-                "username@email.com",
-                "password",
-                @"D:\jmeter\cookie.csv"}
+            new object[] {
+                TestContext.Parameters["target"],
+                TestContext.Parameters["user"],
+                TestContext.Parameters["pwd"],
+                @TestContext.Parameters["outputPath"]
+            }
         };
         [TearDown]
         public void TeardownTest()
