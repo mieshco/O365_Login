@@ -12,9 +12,6 @@ namespace O365
     public class Login
     {
         private IWebDriver _driver;
-        private string BaseUrl { get; set; }
-        private string LoginUser { get; set; }
-        private string LoginPass { get; set; }
 
         [SetUp]
         public void SetupTest()
@@ -32,13 +29,10 @@ namespace O365
         [Test, TestCaseSource(nameof(LoginCombinations))]
         public void GetLoginCookie(string target, string username, string password, string filePath)
         {
-            BaseUrl = target;
-            LoginUser = username;
-            LoginPass = password;
-            var gate1 = new O365Login(_driver,LoginUser);
-            var gate2 = new LiveLogin(_driver, LoginPass);
+            var gate1 = new O365Login(_driver,username);
+            var gate2 = new LiveLogin(_driver, password);
 
-            _driver.Navigate().GoToUrl(BaseUrl);
+            _driver.Navigate().GoToUrl(target);
             gate1.Login();
             gate2.Login();
             _driver.WaitForElementToBeVisible(By.LinkText("Documents"));
