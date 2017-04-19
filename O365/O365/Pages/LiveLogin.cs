@@ -15,7 +15,7 @@ namespace O365.Pages
 
         private readonly By _passwordDescription = By.Id("passwordDesc");
         private readonly By _passwordInput = By.Name("passwd");
-        private readonly By _signInButton = By.XPath("//input[@type='submit' and @value='Sign in']");
+        private readonly By _signInButton = By.XPath("//input[@type='submit']");
 
         public LiveLogin Login()
         {
