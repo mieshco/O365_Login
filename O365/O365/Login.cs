@@ -37,8 +37,8 @@ namespace O365
             gate2.Login();
             _driver.WaitForElementToBeVisible(By.LinkText("Documents"));
             _driver.Title.Should().Contain("Documents");
-            var listItem = _driver.FindElement(By.XPath("//a[contains(@href,'dummy64')]"));
-            listItem.Text.Should().Contain("dummy64");
+            var listItem = _driver.FindElement(By.XPath("//a[contains(@href,'D64MB')]"));
+            listItem.Text.Should().Contain("D64MB");
 
             var cookie1 = Browser.ReadCookie(_driver,"FedAuth");
             var cookie2 = Browser.ReadCookie(_driver, "rtFa");
