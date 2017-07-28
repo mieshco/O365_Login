@@ -1,3 +1,4 @@
+using System.Threading;
 using O365.Helpers;
 using OpenQA.Selenium;
 
@@ -13,7 +14,7 @@ namespace O365.Pages
             _password = password;
         }
 
-        private readonly By _passwordDescription = By.Id("passwordDesc");
+        private readonly By _passwordDescription = By.ClassName("phholder");
         private readonly By _passwordInput = By.Name("passwd");
         private readonly By _signInButton = By.XPath("//input[@type='submit']");
 
@@ -22,6 +23,7 @@ namespace O365.Pages
             _driver.WaitForElementToBeVisible(this._passwordDescription);
             var passwordInput = _driver.FindElement(_passwordInput);
             passwordInput.Click();
+            passwordInput.Clear();
             passwordInput.SendKeys(_password);
             var signInButton = _driver.FindElement(_signInButton);
             signInButton.Click();

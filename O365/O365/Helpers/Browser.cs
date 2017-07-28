@@ -20,5 +20,6 @@ namespace O365.Helpers
             var cookieValue= driver.Manage().Cookies.GetCookieNamed(cookieName).Value;
             return $"{cookieName}={cookieValue}";
         }
+
     }
 }

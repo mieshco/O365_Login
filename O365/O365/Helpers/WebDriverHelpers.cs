@@ -5,7 +5,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace O365.Helpers
 {
-    public static class WebDriverWaits
+    public static class WebDriverHelpers
     {
         private const int DefaultExplicitTimeout = 45;
         private const int TimeInterval = 250;
@@ -56,6 +56,41 @@ namespace O365.Helpers
             }
 
             throw new ArgumentException("Context isn't IWebDriver nor IWebElement");
+        }
+        public static void EnterGivenTextByJScript(this IWebDriver driver, IWebElement targetElement, string text)
+        {
+            var ex = (IJavaScriptExecutor)driver;
+            ex.ExecuteScript(String.Format("arguments[0].value='{0}';", text.Replace("'", "\"")), targetElement);
+        }
+
+        public static void EnterGivenTextByJScript(this IWebDriver driver, By targetElementBy, string text)
+        {
+            var element = driver.FindElement(targetElementBy);
+            driver.EnterGivenTextByJScript(element, text);
+        }
+
+        public static void JavaScriptWaitAndClickElement(this IWebDriver driver, By by)
+        {
+            var elementToClick = driver.WaitForElementToBeVisible(@by);
+            driver.JavaScriptClick(elementToClick);
+        }
+
+        public static void JavaScriptClick(this IWebDriver driver, IWebElement element)
+        {
+            var ex = (IJavaScriptExecutor)driver;
+            ex.ExecuteScript("arguments[0].click();", element);
+        }
+
+        public static void JavaScriptClick(this IWebDriver driver, By by)
+        {
+            var elementToClick = driver.FindElement(@by);
+            JavaScriptClick(elementToClick);
+        }
+
+        private static void JavaScriptClick(IWebElement element)
+        {
+            var driver = element.GetDriver();
+            driver.JavaScriptClick(element);
         }
     }
 }

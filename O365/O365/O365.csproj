@@ -70,7 +70,7 @@
   <ItemGroup>
     <Compile Include="Helpers\Browser.cs" />
     <Compile Include="Helpers\Condition.cs" />
-    <Compile Include="Helpers\CustomWaits.cs" />
+    <Compile Include="Helpers\WebDriverHelpers.cs" />
     <Compile Include="Pages\LiveLogin.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Pages\O365Login.cs" />
